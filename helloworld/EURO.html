@@ -7,7 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>USD</title>
   </head>
   <style>
     body {
@@ -60,7 +60,7 @@
                 <a class="nav-link" href="EURO.html">EURO</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="Bitcoin.html">BITCOIN</a>
+                <a class="nav-link" href="Bitcoin.html">Bitcoin</a>
               </li>
             </ul>
           </div>
@@ -68,11 +68,32 @@
       </nav> 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <h1>Cotações de Moedas</h1>
-
-    <p>Para fazer a cotação de Dolar, CAD, EURO ou BTC clique acima na moeda desejada!</p>
-   
+    <h1>Cotação atual do Euro</h1>
+    <label>A moeda selecionada é:</label>
+    <select id="cotacao">
+    <option value="EUR">EURO</option>
+    </select><br><br>
+    <input type="submit" value="Submit" onclick="validar()">
+    <p>Valor do Euro em Real:</p>
+    <div id="texto">...</div>
     </body>
     
-
+    <script>
+    function validar(){
+    var cotacao = document.getElementById("cotacao").value;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200) {
+    var json = JSON.parse(this.responseText);
+    if (cotacao == 'EUR'){
+    document.getElementById("texto").innerHTML = "R$ " + json.EUR.high
+    }
+    }
+    }
+    xhttp.open("GET","https://economia.awesomeapi.com.br/all/" + cotacao + '-BRL',true,)
+    xhttp.send();
+    
+    }
+    </script>
+  
 </html>
